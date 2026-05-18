@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MWPC | Macen Wrapping and Packaging Corp.</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- BRAND VARIABLES & RESET --- */
+        :root {
+            --primary-color: #CC0000;
+            --primary-hover: #990000;
+            --secondary-color: #000000;
+            --light-bg: #F8F8F8;
+            --white: #FFFFFF;
+            --dark-gray: #333333;
+            --light-gray: #E0E0E0;
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--dark-gray);
+            line-height: 1.6;
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            color: var(--secondary-color);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* --- GLOBAL UTILITIES --- */
+        .section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-alt {
+            background-color: var(--light-bg);
+            max-width: 100%;
+            padding: 100px 0;
+        }
+        .section-alt .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            position: relative;
+            padding-left: 20px;
+            border-left: 5px solid var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--white);
+            color: var(--secondary-color);
+        }
+
+        /* --- SCROLL ANIMATION STATES --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- 1. NAVBAR --- */
+        .header-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            z-index: 1000;
+            transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .header-nav.scrolled {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            padding: 10px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--secondary-color);
+        }
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--dark-gray);
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        /* --- 2. HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            min-height: 600px;
+            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            color: var(--white);
+            margin-top: 0;
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 40px;
+            color: var(--light-gray);
+            letter-spacing: 1px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .badge-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .badge-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+        }
+        .badge-card i {
+            color: var(--primary-color);
+            margin-right: 8px;
+        }
+
+        /* --- 3. ABOUT / COMPANY OVERVIEW --- */
+        .about-text {
+            font-size: 1.15rem;
+            max-width: 900px;
+            margin-bottom: 50px;
+            color: var(--dark-gray);
+        }
+
+        .factory-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .factory-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .factory-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-top-color: var(--primary-color);
+        }
+
+        .factory-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .factory-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .factory-highlights {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .factory-highlights li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        .factory-highlights i {
+            color: var(--primary-color);
+            margin-right: 10px;
+            font-size: 0.85rem;
+        }
+
+        /* --- 4. PRODUCTS SECTION --- */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            border-top: 4px solid transparent;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-top-color: var(--primary-color);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+        }
+
+        .product-emoji {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .product-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .product-details {
+            margin-top: auto;
+            list-style: none;
+        }
+
+        .product-details li {
+            padding: 6px 0;
+            border-bottom: 1px dashed var(--light-gray);
+            font-size: 0.9rem;
+        }
+        .product-details li:last-child {
+            border-bottom: none;
+        }
+
+        .product-details strong {
+            color: var(--secondary-color);
+        }
+
+        /* --- 5. INNOVATIONS DEVELOPMENTS --- */
+        .innovations-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .innovations-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .innovations-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--primary-color);
+        }
+
+        .innovations-card h3 {
+            font-size: 1.35rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .innovations-card h3 i {
+            color: var(--primary-color);
+        }
+
+        .innovations-card p {
+            font-size: 0.95rem;
+            color: var(--dark-gray);
+        }
+
+        .innovations-card ul {
+            margin-top: 15px;
+        }
+        .innovations-card ul li {
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .innovations-card ul li i {
+            font-size: 0.75rem;
+            color: var(--primary-color);
+        }
+
+        /* --- 6. SUSTAINABILITY & CIRCULAR ECONOMY --- */
+        .sustainability-lead {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .sustainability-lead span {
+            color: var(--primary-color);
+        }
+
+        .flow-wrapper {
+            margin-bottom: 60px;
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+
+        .flow-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-width: 1000px;
+        }
+
+        .flow-step {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            width: 150px;
+            position: relative;
+            border: 1px solid var(--light-gray);
+        }
+
+        .flow-step i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .flow-step p {
+            font-size: 0.8rem;
+            font-weight: 700;
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+        }
+
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: var(--light-gray);
+            animation: pulse-arrow 2s infinite;
+        }
+
+        @keyframes pulse-arrow {
+            0%, 100% { transform: translateX(0); opacity: 0.6; }
+            50% { transform: translateX(5px); opacity: 1; }
+        }
+
+        .epr-box {
+            background: linear-gradient(135deg, var(--secondary-color), #222);
+            color: var(--white);
+            padding: 40px;
+            border-radius: 8px;
+            border-left: 6px solid var(--primary-color);
+        }
+
+        .epr-box h3 {
+            color: var(--white);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .epr-box p {
+            color: var(--light-gray);
+            font-size: 1rem;
+        }
+
+        /* --- 7. CLIENTS SECTION --- */
+        .clients-subtitle {
+            text-align: center;
+            margin-top: -35px;
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .major-clients {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .client-badge {
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            padding: 25px;
+            text-align: center;
+            border-radius: 8px;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--secondary-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 0.5px;
+        }
+
+        .client-badge:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: scale(1.03);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+        }
+
+        .minor-clients-title {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .minor-clients {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+        }
+
+        .minor-badge {
+            background: #FFF;
+            border: 1px solid #EAEAEA;
+            padding: 12px;
+            text-align: center;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #555;
+            transition: var(--transition);
+        }
+        .minor-badge:hover {
+            background: var(--light-bg);
+            color: var(--secondary-color);
+        }
+
+        /* --- 8. SALES PERFORMANCE SECTION --- */
+        .chart-container {
+            background: var(--white);
+            padding: 50px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+            margin-top: 30px;
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 350px;
+            padding-top: 40px;
+            border-bottom: 2px solid var(--secondary-color);
+            gap: 15px;
+        }
+
+        .chart-bar-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            justify-content: flex-end;
+            position: relative;
+        }
+
+        .bar-value {
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-family: var(--font-heading);
+            opacity: 0;
+            transition: opacity 0.5s ease 0.6s;
+            white-space: nowrap;
+        }
+
+        .bar {
+            width: 100%;
+            max-width: 45px;
+            background-color: var(--primary-color);
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            height: 0;
+            transition: height 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            position: relative;
+        }
+
+        .bar:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .bar-label {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .chart-note {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* --- 9. CONTACT SECTION --- */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 50px;
+        }
+
+        .contact-cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-person-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            border-left: 4px solid var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .contact-person-card:hover {
+            border-left-color: var(--primary-color);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+        }
+
+        .contact-person-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .contact-person-card .role {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-info-line {
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .contact-info-line i {
+            color: #555;
+            width: 16px;
+        }
+
+        .website-showcase {
+            margin-top: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .website-showcase a {
+            color: var(--primary-color);
+        }
+        .website-showcase a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-form-container {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--light-gray);
+            border-radius: 6px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(204,0,0,0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            height: 120px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            border: none;
+        }
+
+        /* --- 10. FOOTER --- */
+        .footer {
+            background-color: #111;
+            color: var(--white);
+            padding: 60px 20px 30px 20px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            border-bottom: 1px solid #222;
+            padding-bottom: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-brand h3 {
+            color: var(--white);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        .footer-brand h3 span {
+            color: var(--primary-color);
+        }
+
+        .footer-brand p {
+            color: #aaa;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            max-width: 400px;
+        }
+
+        .footer-certs p {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 6px;
+        }
+
+        .footer-links h4, .footer-social h4 {
+            color: var(--white);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .footer-links h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .footer-links ul display: flex;
+        .footer-links ul {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #222;
+            color: #aaa;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 1024px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .minor-clients {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .major-clients {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section { padding: 60px 20px; }
+            .section-alt { padding: 60px 0; }
+            .hero-title { font-size: 2.3rem; }
+            .hero-subtitle { font-size: 1rem; }
+            .factory-grid, .innovations-grid, .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            /* Mobile Nav styling */
+            .hamburger { display: flex; }
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                padding: 30px;
+                gap: 20px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                opacity: 0;
+                transform: translateY(-20px);
+                pointer-events: none;
+                transition: var(--transition);
+            }
+            .nav-menu.active {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+            .bar-chart {
+                height: 25px;
+                flex-direction: column;
+                align-items: flex-start;
+                border-bottom: none;
+                border-left: 2px solid var(--secondary-color);
+                padding-top: 0;
+                padding-left: 20px;
+                gap: 20px;
+                height: auto;
+            }
+            .chart-bar-wrapper {
+                flex-direction: row-reverse;
+                justify-content: flex-end;
+                width: 100%;
+                gap: 15px;
+            }
+            .bar {
+                max-width: none;
+                height: 25px !important;
+                width: 0;
+                border-top-left-radius: 0;
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px;
+                transition: width 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            }
+            .bar-value {
+                margin-bottom: 0;
+                margin-left: 8px;
+            }
+            .bar-label {
+                margin-top: 0;
+                width: 50px;
+                text-align: right;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            .minor-clients {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .major-clients {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. NAVBAR -->
+    <header class="header-nav" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">MWPC <span>| Packaging</span></a>
+            <div class="hamburger" id="hamburger-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav class="nav-menu" id="nav-links-container">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#products" class="nav-link">Products</a>
+                <a href="#sustainability" class="nav-link">Sustainability</a>
+                <a href="#clients" class="nav-link">Clients</a>
+                <a href="#performance" class="nav-link">Performance</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 2. HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title">Your Trusted Packaging Partner in the Philippines</h1>
+            <p class="hero-subtitle">ISO 9001:2015 Certified | PEZA Registered | DENR-Approved Recycling Facility</p>
+            <div class="hero-buttons">
+                <a href="#products" class="btn btn-primary">Explore Our Products</a>
+                <a href="#contact" class="btn btn-secondary">Contact Us</a>
+            </div>
+            <div class="badge-row">
+                <div class="badge-card"><i class="fa-solid fa-award"></i> ISO 9001:2015</div>
+                <div class="badge-card"><i class="fa-solid fa-building-shield"></i> PEZA Registered</div>
+                <div class="badge-card"><i class="fa-solid fa-recycle"></i> DENR Recycling Approved</div>
+                <div class="badge-card"><i class="fa-solid fa-check-double"></i> JAS-ANZ Accredited</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. ABOUT / COMPANY OVERVIEW -->
+    <section class="section reveal" id="about">
+        <h2 class="section-title">Company Overview</h2>
+        <p class="about-text">
+            Macen Wrapping and Packaging Corp. (MWPC) is a premier PEZA-registered, ISO 9001:2015 certified manufacturer of high-grade polyethylene packaging solutions serving globally recognized multinational corporations across the Philippines. Operating with precision, reliability, and eco-consciousness, we seamlessly blend industrial capability with modern, sustainable practices.
+        </p>
+        <div class="factory-grid">
+            <div class="factory-card">
+                <div class="factory-icon"><i class="fa-solid fa-industry"></i></div>
+                <h3>Cavite Economic Zone (CEZ)</h3>
+                <p>Strategically situated to feed the active manufacturing corridors of Cavite with uninterrupted high-performance materials output.</p>
+                <ul class="factory-highlights">
+                    <li><i class="fa-solid fa-circle-check"></i> ISO 9001:2015 Certified</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Enterprise PEZA Zone Operational Clearances</li>
+                    <li><i class="fa-solid fa-circle-check"></i> High-Speed Extrusion Lines</li>
+                </ul>
+            </div>
+            <div class="factory-card">
+                <div class="factory-icon"><i class="fa-solid fa-leaf"></i></div>
+                <h3>Lima Technology Center (LTC)</h3>
+                <p>Located in Batangas, this flagship facility houses advanced production ecosystems integrated directly with large-scale conversion capabilities.</p>
+                <ul class="factory-highlights">
+                    <li><i class="fa-solid fa-circle-check"></i> ISO 9001:2015 Certified Production Systems</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Specialized Polyethylene Recycling Line</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Sustainable On-site Waste Circularity Loop</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. PRODUCTS SECTION -->
+    <div class="section-alt" id="products">
+        <div class="section-container reveal">
+            <h2 class="section-title">Our Product Portfolio</h2>
+            <div class="product-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-emoji">🎞️</div>
+                    <h3>Stretch Film</h3>
+                    <ul class="product-details">
+                        <li><strong>Width:</strong> 500mm</li>
+                        <li><strong>Thickness:</strong> 10–23µm</li>
+                        <li><strong>Cores:</strong> 2" and 3" options</li>
+                        <li><strong>Length:</strong> Fully Customizable</li>
+                    </ul>
+                </div>
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-emoji">🛍️</div>
+                    <h3>PE Bag</h3>
+                    <ul class="product-details">
+                        <li><strong>Size:</strong> 40–1500mm x 40–1500mm</li>
+                        <li><strong>Thickness:</strong> 25–100µm</li>
+                        <li><strong>Materials:</strong> LDPE, HDPE</li>
+                        <li><strong>Variants:</strong> Anti-static, VCI additive, colorant, print, recycled, box type, blister type, sheet</li>
+                    </ul>
+                </div>
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-emoji">🔒</div>
+                    <h3>Ziplock Bag</h3>
+                    <ul class="product-details">
+                        <li><strong>Size:</strong> 40–350mm x 40–350mm</li>
+                        <li><strong>Thickness:</strong> 50–80µm</li>
+                        <li><strong>Material:</strong> Premium LDPE</li>
+                        <li><strong>Variants:</strong> With adhesive, interlocking plastic tracks, custom print, punched hole</li>
+                    </ul>
+                </div>
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-emoji">🫧</div>
+                    <h3>Bubble Bag</h3>
+                    <ul class="product-details">
+                        <li><strong>Size:</strong> 40–500mm x 40–500mm</li>
+                        <li><strong>Bubble Dia:</strong> 9.6–10mm</li>
+                        <li><strong>Build:</strong> 2-ply and 3-ply structures</li>
+                        <li><strong>Options:</strong> Bubble Sheet, adhesive lip, custom colors</li>
+                    </ul>
+                </div>
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="product-emoji">📦</div>
+                    <h3>Foam Bag</h3>
+                    <ul class="product-details">
+                        <li><strong>Size:</strong> 40–500mm x 40–500mm</li>
+                        <li><strong>Thickness:</strong> 0.5–50mm range</li>
+                        <li><strong>Options:</strong> Foam Sheet conversion, functional holes, with adhesive strip</li>
+                    </ul>
+                </div>
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <div class="product-emoji">♻️</div>
+                    <h3>Re-Pelletized Resin</h3>
+                    <ul class="product-details">
+                        <li><strong>Source:</strong> Recycled structural raw plastic</li>
+                        <li><strong>Class A:</strong> Near-virgin processing caliber</li>
+                        <li><strong>Class B:</strong> General-purpose infrastructure applications</li>
+                        <li><strong>Class C & D:</strong> Industrial grade / structural fillers</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. INNOVATIONS / DEVELOPMENTS SECTION -->
+    <section class="section reveal">
+        <h2 class="section-title">Innovations & Developments</h2>
+        <div class="innovations-grid">
+            <div class="innovations-card">
+                <h3><i class="fa-solid fa-seedling"></i> Eco-Friendly Packaging</h3>
+                <p>Pioneering sustainable plastic processing layouts through active implementation of OXIO-BIO (Oxium additives) to induce targeted oxidation-biodegradation. Additionally manufacturing the specialized ECO PE Bag line using Ecoplas bio-based biodegradable resins to scale 100% degradable properties.</p>
+            </div>
+            <div class="innovations-card">
+                <h3><i class="fa-solid fa-compress"></i> 10-Micron Ultra-Thin Stretch Film</h3>
+                <p>Engineering breakdown boundaries with lightweight architectural structures that maintain uncompromising structural integrity.</p>
+                <ul>
+                    <li><i class="fa-solid fa-check"></i> Exceptionally fluid manual/machine application</li>
+                    <li><i class="fa-solid fa-check"></i> Dramatic raw material reduction & cost-efficiency</li>
+                    <li><i class="fa-solid fa-check"></i> High tensile performance and structural recovery load retention</li>
+                </ul>
+            </div>
+            <div class="innovations-card">
+                <h3><i class="fa-solid fa-print"></i> PE with Water-Based Ink Print</h3>
+                <p>Transitioning graphic marking to ultra-low VOC profiles. Our custom configured printing setups ensure pristine visual results that remain completely resistant to moisture bleeding or surface breakdown.</p>
+                <ul>
+                    <li><i class="fa-solid fa-check"></i> Perfect for food-grade, high-end retail, and logistics assets</li>
+                    <li><i class="fa-solid fa-check"></i> Completely custom sizes, clear scales, and high designs</li>
+                </ul>
+            </div>
+            <div class="innovations-card">
+                <h3><i class="fa-solid fa-bolt"></i> Hybrid Extruder Machine (HEM-01)</h3>
+                <p>Our strictly proprietary operational engineering breakthrough. The HEM-01 co-generates functional electricity dynamically harvested right from active machinery heat and kinetic loops to directly feed back into our office administrative infrastructure, knocking out grid dependency.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. SUSTAINABILITY / CIRCULAR ECONOMY SECTION -->
+    <div class="section-alt" id="sustainability">
+        <div class="section-container reveal">
+            <h2 class="section-title">Our Circular Economy Commitment</h2>
+            <p class="sustainability-lead">
+                <span>MWPC Lima</span> operates as a fully accredited, <strong>PEZA & DENR Approved Recycling Facility</strong>.
+            </p>
+
+            <div class="flow-wrapper">
+                <div class="flow-container">
+                    <div class="flow-step">
+                        <i class="fa-solid fa-dumpster-fire"></i>
+                        <p>Plastic Waste</p>
+                    </div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="flow-step">
+                        <i class="fa-solid fa-truck-ramp-box"></i>
+                        <p>Pick up by Macen</p>
+                    </div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="flow-step">
+                        <i class="fa-solid fa-warehouse"></i>
+                        <p>Send to Factory</p>
+                    </div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="flow-step">
+                        <i class="fa-solid fa-hands-asl-interpreting"></i>
+                        <p>Sorting Process</p>
+                    </div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="flow-step">
+                        <i class="fa-solid fa-fire-burner"></i>
+                        <p>Melting & Shredding</p>
+                    </div>
+                    <div class="flow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="flow-step">
+                        <i class="fa-solid fa-boxes-packing"></i>
+                        <p>Re-Pelletized / Recycled Bag</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="epr-box">
+                <h3>Extended Producer Responsibility (EPR) Compliance</h3>
+                <p>In response to Republic Act 11898, MWPC provides fully managed loops to assist corporate plastic producers with modern asset tracking, verified secondary life recovery programs, and compliant certifications required by the DENR-EMB framework.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. CLIENTS SECTION -->
+    <section class="section reveal" id="clients">
+        <h2 class="section-title">Trusted by Industry Leaders</h2>
+        <p class="clients-subtitle">Supplying high-performance packaging components directly to elite global enterprises across Philippine Economic Zones</p>
+        
+        <!-- Major Clients -->
+        <div class="major-clients">
+            <div class="client-badge">Epson</div>
+            <div class="client-badge">Fujitsu</div>
+            <div class="client-badge">Glory</div>
+            <div class="client-badge">Denso</div>
+            <div class="client-badge">Kyocera</div>
+            <div class="client-badge">Goldrich</div>
+            <div class="client-badge">Schneider Electric</div>
+            <div class="client-badge">SPWS</div>
+        </div>
+
+        <h4 class="minor-clients-title">Extended Partner Roster</h4>
+        <!-- Minor Clients -->
+        <div class="minor-clients">
+            <div class="minor-badge">HS Technologies</div>
+            <div class="minor-badge">Crestec</div>
+            <div class="minor-badge">Harada</div>
+            <div class="minor-badge">HEPC</div>
+            <div class="minor-badge">Aikawa</div>
+            <div class="minor-badge">Daiho</div>
+            <div class="minor-badge">Almex Tech</div>
+            <div class="minor-badge">Adamay Int.</div>
+            <div class="minor-badge">Parts Seiko</div>
+            <div class="minor-badge">Chiyoda Integre</div>
+            <div class="minor-badge">Thermos</div>
+            <div class="minor-badge">Sansyu</div>
+            <div class="minor-badge">Superflex</div>
+            <div class="minor-badge">Denso Ten</div>
+            <div class="minor-badge">EPE</div>
+            <div class="minor-badge">Sohbi Kohgei</div>
+            <div class="minor-badge">Sumitronics</div>
+            <div class="minor-badge">M.A. Technology</div>
+            <div class="minor-badge">Philippines TRC</div>
+            <div class="minor-badge">Sunon</div>
+            <div class="minor-badge">JPN Inc.</div>
+            <div class="minor-badge">Mera</div>
+        </div>
+    </section>
+
+    <!-- 8. SALES PERFORMANCE SECTION -->
+    <div class="section-alt" id="performance">
+        <div class="section-container reveal">
+            <h2 class="section-title">Our Growth Story</h2>
+            <div class="chart-container">
+                <div class="bar-chart" id="sales-chart">
+                    <!-- Bars generated dynamically via JS data mapping to control clean, accurate percentages -->
+                    <div class="chart-bar-wrapper">
+                        <span class="bar-value">₱15.59M</span>
+                        <div class="bar" data-value="15.598"></div>
+                        <span class="bar-label">2014</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <span class="bar-value">₱17.49M</span>
+                        <div class="bar" data-value="17.495"></div>
+                        <span class="bar-label">2015</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <span class="bar-value">₱39.12M</span>
+                        <div class="bar" data-value="39.121"></div>
+                        <span class="bar-label">2016</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <span class="bar-value">₱63.70M</span>
+                        <div class="bar" data-value="63.701"></div>
+                        <span class="bar-label">2017</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <span class="bar-value">₱102.86M</span>
+                        <div class="bar" data-value="102.863"></div>
+                        <span class="bar-label">2018</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <span class="bar-value">₱107.49M</span>
+                        <div class="bar" data-value="107.496"></div>
+                        <span class="bar-label">2019</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <span class="bar-value">₱74.20M</span>
+                        <div class="bar" data-value="74.2"></div>
+                        <span class="bar-label">2020</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <span class="bar-value">₱98.00M</span>
+                        <div class="bar" data-value="98"></div>
+                        <span class="bar-label">2021</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <span class="bar-value">₱109.17M</span>
+                        <div class="bar" data-value="109.174"></div>
+                        <span class="bar-label">2022</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <span class="bar-value">₱100.53M</span>
+                        <div class="bar" data-value="100.537"></div>
+                        <span class="bar-label">2023</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <span class="bar-value">₱125.06M</span>
+                        <div class="bar" data-value="125.063"></div>
+                        <span class="bar-label">2024</span>
+                    </div>
+                </div>
+                <p class="chart-note">Annual Corporate Sales Value in Millions (PHP)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 9. CONTACT SECTION -->
+    <section class="section reveal" id="contact">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-grid">
+            <div class="contact-cards-container">
+                <!-- Person 1 -->
+                <div class="contact-person-card">
+                    <h4>Mr. Lord Jerome Escanilla</h4>
+                    <div class="role">Business Development</div>
+                    <div class="contact-info-line"><i class="fa-solid fa-envelope"></i> bd.cavite@macenpackaging.com</div>
+                    <div class="contact-info-line"><i class="fa-solid fa-phone"></i> 0966-773-7320</div>
+                </div>
+                <!-- Person 2 -->
+                <div class="contact-person-card">
+                    <h4>Ms. Deserie Magsino</h4>
+                    <div class="role">Business Development</div>
+                    <div class="contact-info-line"><i class="fa-solid fa-envelope"></i> dei.m@macenpackaging.com</div>
+                    <div class="contact-info-line"><i class="fa-solid fa-phone"></i> 0917-516-7641</div>
+                </div>
+                <!-- Person 3 -->
+                <div class="contact-person-card">
+                    <h4>Mr. Manny Mercado</h4>
+                    <div class="role">Business Development</div>
+                    <div class="contact-info-line"><i class="fa-solid fa-envelope"></i> m.mercado@macenpackaging.com</div>
+                    <div class="contact-info-line"><i class="fa-solid fa-phone"></i> 0917-839-2485</div>
+                </div>
+                <div class="website-showcase">
+                    <i class="fa-solid fa-globe"></i> Enterprise Portal: <a href="http://www.macencorp.com" target="_blank">www.macencorp.com</a>
+                </div>
+            </div>
+
+            <div class="contact-form-container">
+                <form id="rfqForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" class="form-control" placeholder="Multinational Corp" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Corporate Email</label>
+                        <input type="email" id="email" class="form-control" placeholder="johndoe@company.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone / Mobile</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="0917-XXX-XXXX" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Packaging Specifications / Requirements</label>
+                        <textarea id="message" class="form-control" placeholder="Specify required film micrometer width, bag configurations, or EPR collection requests..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-submit">Submit Request for Quote</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h3>MWPC <span>Corp.</span></h3>
+                <p>"Packaging Excellence. Sustainable Future."</p>
+                <div class="footer-certs">
+                    <p><i class="fa-solid fa-certificate"></i> ISO 9001:2015 Certified System</p>
+                    <p><i class="fa-solid fa-building-flag"></i> PEZA Zone Ecosystem Facility</p>
+                    <p><i class="fa-solid fa-recycle"></i> DENR Regulated Waste Recycling Unit</p>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#sustainability">Sustainability</a></li>
+                    <li><a href="#clients">Clients</a></li>
+                    <li><a href="#performance">Performance</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Connect With Us</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Macen Wrapping and Packaging Corp. All Rights Reserved.</p>
+            <p>Designed for absolute reliability and industrial compliance.</p>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPTS -->
+    <script>
+        // --- MOBILE NAV BAR BURGER TOGGLE ---
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const navLinksContainer = document.getElementById('nav-links-container');
+
+        hamburgerBtn.addEventListener('click', () => {
+            navLinksContainer.classList.toggle('active');
+        });
+
+        // Close menu upon item selection on small screens
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinksContainer.classList.remove('active');
+            });
+        });
+
+        // --- STICKY NAV BACKGROUND SWITCHER ---
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // --- SCROLL ELEMENT REVEALS (Intersection Observer) ---
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    
+                    // Specific trigger logic for active scale animations within chart container
+                    if (entry.target.id === 'performance' || entry.target.querySelector('#sales-chart')) {
+                        animateChartBars();
+                    }
+                }
+            });
+        }, { threshold: 0.15 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // --- ACTIVE LINK STATE DETECTOR FOR NAV BAR ---
+        const sections = document.querySelectorAll('section, .section-alt');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let currentSectionId = 'home';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                if (window.scrollY >= sectionTop) {
+                    currentSectionId = section.getAttribute('id') || 'products';
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSectionId}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // --- PURE JS CHART ANIMATOR LOOP ---
+        function animateChartBars() {
+            const bars = document.querySelectorAll('.bar');
+            const values = document.querySelectorAll('.bar-value');
+            
+            // Find max reference point to scale chart proportionally to layout box size
+            let valuesArray = [];
+            bars.forEach(bar => valuesArray.push(parseFloat(bar.getAttribute('data-value'))));
+            const maxVal = Math.max(...valuesArray);
+
+            const isMobile = window.innerWidth <= 768;
+
+            bars.forEach((bar, index) => {
+                const standardValue = parseFloat(bar.getAttribute('data-value'));
+                const scaledPercentage = (standardValue / maxVal) * 100;
+                
+                setTimeout(() => {
+                    if (isMobile) {
+                        bar.style.width = `${scaledPercentage}%`;
+                    } else {
+                        bar.style.height = `${scaledPercentage}%`;
+                    }
+                    if (values[index]) values[index].style.opacity = '1';
+                }, index * 80); // Incremental delays for waterfall entrance effects
+            });
+        }
+
+        // --- BASIC RFQ SUBMISSION CATCH ---
+        document.getElementById('rfqForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for requesting an engineering evaluation from Macen Wrapping and Packaging Corp. A Business Development Manager will verify your production specifications and reach out to you within 24 business hours.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
